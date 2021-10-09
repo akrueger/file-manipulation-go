@@ -13,7 +13,7 @@ import (
 
 type label struct {
 	value string
-	dcn   string
+	emn   string
 }
 
 var labelMap = map[string]label{
@@ -137,8 +137,8 @@ func main() {
 					}
 
 					if fileOneLabel.value != fileTwoLabel.value {
-						fileOneValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file1), index, fileOneLabel.dcn, key, fileOneLabel.value)
-						fileTwoValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file2), index, fileTwoLabel.dcn, key, fileTwoLabel.value)
+						fileOneValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file1), index, fileOneLabel.emn, key, fileOneLabel.value)
+						fileTwoValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file2), index, fileTwoLabel.emn, key, fileTwoLabel.value)
 
 						outputLines = append(outputLines, fileOneValueOutput)
 						outputLines = append(outputLines, fileTwoValueOutput)
@@ -182,15 +182,15 @@ func getLines(filename string) []map[string]label {
 
 		for key := range fileLabelMap {
 			if key == "GABAV" {
-				fileLabelMap[key] = label{findLabelValues(line, fmt.Sprintf("[%s]", key), "|"), findLabelValues(line, "[DCN]", "[")}
+				fileLabelMap[key] = label{findLabelValues(line, fmt.Sprintf("[%s]", key), "|"), findLabelValues(line, "[EMN]", "[")}
 			} else if key == "Raicop" {
 				s := findLabelValues(line, fmt.Sprintf("[%s]", key), "[")
 				if len(s) > 0 {
 					s = string(s[0])
-					fileLabelMap[key] = label{s, findLabelValues(line, "[DCN]", "[")}
+					fileLabelMap[key] = label{s, findLabelValues(line, "[EMN]", "[")}
 				}
 			} else {
-				fileLabelMap[key] = label{findLabelValues(line, fmt.Sprintf("[%s]", key), "["), findLabelValues(line, "[DCN]", "[")}
+				fileLabelMap[key] = label{findLabelValues(line, fmt.Sprintf("[%s]", key), "["), findLabelValues(line, "[EMN]", "[")}
 			}
 		}
 		lineSlice = append(lineSlice, fileLabelMap)
