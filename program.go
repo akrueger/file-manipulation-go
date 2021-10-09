@@ -17,93 +17,93 @@ type label struct {
 }
 
 var labelMap = map[string]label{
-	"Proposal 1-4": {
+	"Toka Nurslurgers": {
 		"",
 		"",
 	},
-	"Proposal 5-8": {
+	"Toka Yakias": {
 		"",
 		"",
 	},
-	"Proposal 9-12": {
+	"Toka Djaigi": {
 		"",
 		"",
 	},
-	"Proposal 13-16": {
+	"Toka Syimbawk": {
 		"",
 		"",
 	},
-	"Proposal 17-18": {
+	"Toka Katisu": {
 		"",
 		"",
 	},
-	"Proposal 19-20": {
+	"Toka Byiogo": {
 		"",
 		"",
 	},
-	"Proposal 21-24": {
+	"Toka Muuoki": {
 		"",
 		"",
 	},
-	"Proposal 25-28": {
+	"Toka Qiiburs": {
 		"",
 		"",
 	},
-	"Proposal 29-32": {
+	"Toka Vosoks": {
 		"",
 		"",
 	},
-	"Proposal 33": {
+	"Toka Iok": {
 		"",
 		"",
 	},
-	"Proposal 34-37": {
+	"Toka Tarrahic": {
 		"",
 		"",
 	},
-	"Proposal 38-41": {
+	"Toka Ufalnakoke": {
 		"",
 		"",
 	},
-	"Proposal 42-45": {
+	"Toka Ybarsk": {
 		"",
 		"",
 	},
-	"Proposal 46-49": {
+	"Toka Wawwapysuk": {
 		"",
 		"",
 	},
-	"Proposal 50-53": {
+	"Toka Simi Sammuq": {
 		"",
 		"",
 	},
-	"Proposal 54-57": {
+	"Toka Cataujar": {
 		"",
 		"",
 	},
-	"Legal Proxy": {
+	"Riniawask": {
 		"",
 		"",
 	},
-	"For All Except": {
+	"Raicop": {
 		"",
 		"",
 	},
-	"Signature 1": {
+	"Marra Vi 1": {
 		"",
 		"",
 	},
-	"Signature 2": {
+	"Marra Vi 2": {
 		"",
 		"",
 	},
-	"ERROR": {
+	"GABAV": {
 		"",
 		"",
 	},
 }
 
-type proposals struct {
+type tokas struct {
 	one string
 	two string
 }
@@ -128,17 +128,17 @@ func main() {
 				fileTwoLabel := fileTwoLines[index][key]
 				if len(fileOneLabel.value) > 0 && len(fileTwoLabel.value) > 0 {
 
-					if strings.Contains(key, "Proposal") {
-						p := proposals{fileOneLabel.value, fileTwoLabel.value}
-						pPrime := formatProposals(p)
+					if strings.Contains(key, "Toka") {
+						p := tokas{fileOneLabel.value, fileTwoLabel.value}
+						pPrime := formatTokas(p)
 
 						fileOneLabel.value = pPrime.one
 						fileTwoLabel.value = pPrime.two
 					}
 
 					if fileOneLabel.value != fileTwoLabel.value {
-						fileOneValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file1), index-2, fileOneLabel.dcn, key, fileOneLabel.value)
-						fileTwoValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file2), index-2, fileTwoLabel.dcn, key, fileTwoLabel.value)
+						fileOneValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file1), index, fileOneLabel.dcn, key, fileOneLabel.value)
+						fileTwoValueOutput := fmt.Sprintf("%v, %v, %v, %v, %v", filepath.Base(file2), index, fileTwoLabel.dcn, key, fileTwoLabel.value)
 
 						outputLines = append(outputLines, fileOneValueOutput)
 						outputLines = append(outputLines, fileTwoValueOutput)
@@ -181,9 +181,9 @@ func getLines(filename string) []map[string]label {
 		}
 
 		for key := range fileLabelMap {
-			if key == "ERROR" {
+			if key == "GABAV" {
 				fileLabelMap[key] = label{findLabelValues(line, fmt.Sprintf("[%s]", key), "|"), findLabelValues(line, "[DCN]", "[")}
-			} else if key == "For All Except" {
+			} else if key == "Raicop" {
 				s := findLabelValues(line, fmt.Sprintf("[%s]", key), "[")
 				if len(s) > 0 {
 					s = string(s[0])
@@ -244,7 +244,7 @@ func writeFile(lines []string, file1 string, file2 string) {
 	fmt.Printf("%s written successfully\n", outputFile)
 }
 
-func formatProposals(p proposals) proposals {
+func formatTokas(p tokas) tokas {
 	s1 := strings.ReplaceAll(p.one, ",", "")
 	s2 := strings.ReplaceAll(p.two, ",", "")
 	s1a := strings.Split(s1, ";")
@@ -263,5 +263,5 @@ func formatProposals(p proposals) proposals {
 	s1b := strings.Join(s1a, "|")
 	s2b := strings.Join(s2a, "|")
 
-	return proposals{s1b, s2b}
+	return tokas{s1b, s2b}
 }
